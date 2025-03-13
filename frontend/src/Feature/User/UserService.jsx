@@ -154,3 +154,24 @@ export const sellerTotalOrderStatusService = async () => {
   );
   if (response.data) return response.data;
 };
+export const adminTotalOrderStatusService = async () => {
+  const response = await axios.get(
+    `${base_url}/user/admin/getStatusCount`,
+    config
+  );
+  if (response.data) return response.data;
+};
+export const adminTotalSellService = async () => {
+  const response = await axios.get(
+    `${base_url}/user/admin/getAllAmountCountForAdmin`,
+    config
+  );
+  if (response.data) return response.data;
+};
+export const adminTotalProductsService = async () => {
+  const response = await axios.get(
+    `${base_url}/product/admin/getAllProduct`,
+    config
+  );
+  if (response.data) return response.data;
+};

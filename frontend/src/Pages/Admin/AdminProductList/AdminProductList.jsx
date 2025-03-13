@@ -17,7 +17,6 @@ const AdminProductList = () => {
   const { adminProductList, isLoading } = useSelector(
     (state) => state?.products
   );
-  // console.log(adminProductList);
 
   const columns = [
     {
@@ -70,14 +69,7 @@ const AdminProductList = () => {
       className: "py-2 px-4",
       render: (text, record) => (
         <>
-          {/* {console.log(text)} */}
-          <Switch
-            value={text}
-            disabled
-            // onChange={() => {
-            //   handleActiveInactive(record?.product_id);
-            // }}
-          ></Switch>
+          <Switch value={text} disabled></Switch>
         </>
       ),
     },
@@ -88,7 +80,7 @@ const AdminProductList = () => {
       render: (text, record) => (
         <>
           <div
-            className="cursor-pointer align-middle "
+            className="cursor-pointer align-middle"
             onClick={() => {
               navigate(`transaction/${record?.product_id}`);
             }}
@@ -98,25 +90,6 @@ const AdminProductList = () => {
         </>
       ),
     },
-    // {
-    //   title: "Action",
-    //   key: "action",
-    //   className: "py-2 px-4",
-    //   render: (text, record) => (
-    //     <>
-    //       <div className="flex cursor-pointer gap-2">
-    //         <FaEdit size={20} color="blue" /> |
-    //         <MdDelete
-    //           size={20}
-    //           color="red"
-    //           // onClick={() => {
-    //           //   handleDeleteSellerProd(record?.product_id);
-    //           // }}
-    //         />
-    //       </div>
-    //     </>
-    //   ),
-    // },
   ];
 
   return (
@@ -131,7 +104,7 @@ const AdminProductList = () => {
           className="bg-white"
         />
       </div>
-    </>
+    </> 
   );
 };
 

@@ -520,7 +520,7 @@ const adminGetAllProductList = async (req, res) => {
   // console.log(product_id);
 
   try {
-    const [result] = await db.query("select * from products");
+    const [result] = await db.query("SELECT * from products");
     res.status(200).json(result);
   } catch (error) {
     throw new Error(error);

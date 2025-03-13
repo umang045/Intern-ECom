@@ -33,6 +33,7 @@ const { getOrderForAdmin } = require("../controller/user");
 
 const router = express.Router();
 
+router.get("/admin/getAllProduct",authMiddleware, adminGetAllProductList);
 router.get("/sellerProd",authMiddleware , getProductsBySellerId);
 router.get("/getAllReviews", getUsersReview);
 router.get("/getSellerTotalProd", authMiddleware, getSellerTotalProd);
@@ -54,7 +55,6 @@ router.delete("/review/del/:review_id", delReview);
 router.post("/getUserReview", getUsersReview);
 
 router.post("/sellerProd/search", searchProd);
-router.get("/admin/getAllProduct",authMiddleware, adminGetAllProductList);
 
 router.post("/", authMiddleware , addProduct);
 router.put("/", updateProduct);

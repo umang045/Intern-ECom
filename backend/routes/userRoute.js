@@ -40,6 +40,7 @@ const { authMiddleware } = require("../middleware/authMiddleare");
 const router = express.Router();
 
 // router.get("/admin/getAllOrder",authMiddleware, getOrderForAdmin);
+router.get("/admin/getStatusCount", authMiddleware, getStatusCountForAdmin);
 router.get("/seller/getOrder", authMiddleware, fetchSellerOrders);
 router.get(
   "/getUsersOrdersPaymentDetails/:order_id",
@@ -73,7 +74,6 @@ router.get(
   authMiddleware,
   getAmountCountForAdmin
 );
-router.get("/admin/getStatusCount", authMiddleware, getStatusCountForAdmin);
 
 router.post("/addorder", authMiddleware, placeOrder);
 router.post("/delUserOrder", authMiddleware, delUserOrder);

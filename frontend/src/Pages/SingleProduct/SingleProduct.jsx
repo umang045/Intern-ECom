@@ -148,7 +148,7 @@ export const SingleProduct = () => {
             <div className="flex justify-between items-center mb-6">
               {/* <div className="flex items-center"></div> */}
               <Link
-                to={"/products"}
+                to={-1}
                 className="px-4 py-2 bg-gray-700 text-white rounded-md text-sm hover:bg-gray-800"
               >
                 Back

@@ -55,7 +55,6 @@ const AdminSellerList = () => {
       </div>
     </>
   );
-
 };
 
 export default AdminSellerList;

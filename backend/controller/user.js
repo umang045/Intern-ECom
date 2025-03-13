@@ -520,11 +520,11 @@ const getStatusCount = async (req, res) => {
 
 //status count for admin
 const getStatusCountForAdmin = async (req, res) => {
-  // const seller_id = req.userId;
-  // console.log(seller_id);
   try {
-    const [result] = await db.query("call fetchOrderStatusForAdmin()");
-    res.status(200).json(result[0]);
+    const [result] = await db.query(
+      "select o.status as label, count(o.status) as value from order_items ot inner join orders o on o.order_id = ot.order_id inner join products p on p.product_id = ot.product_id group by 1"
+    );
+    res.status(200).json(result);
   } catch (error) {
     throw new Error(error);
   }
@@ -603,9 +603,9 @@ const getAllProductCountForAdmin = async (req, res) => {
 const getAmountCountForAdmin = async (req, res) => {
   try {
     const [resultSets, fields] = await db.query(
-      "select sum(amount) as totalSellerSell from orders where  status = 'Delivered'"
+      "select p.seller_id,count(p.seller_id) as orders,sum((o.quantity*o.price)) as sell from order_items o inner join products p on p.product_id=o.product_id  group by p.seller_id"
     );
-    res.status(200).json(resultSets[0]);
+    res.status(200).json(resultSets);
   } catch (error) {
     console.error("Error fetching users:", error.message);
     res.status(500).send("Internal Server Error");

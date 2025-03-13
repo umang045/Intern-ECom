@@ -6,6 +6,9 @@ import {
   adminGetAllOrderService,
   adminGetAllTotalSellService,
   adminGetAllUsersService,
+  adminTotalOrderStatusService,
+  adminTotalProductsService,
+  adminTotalSellService,
   cancleUsersOrderService,
   deleteUsersAddressService,
   getAllSellersOrderService,
@@ -268,6 +271,36 @@ export const sellerTotalOrderStatus = createAsyncThunk(
     }
   }
 );
+export const adminTotalOrderStatus = createAsyncThunk(
+  "users/get-admin-orderStatus",
+  async (ThunkAPI) => {
+    try {
+      return await adminTotalOrderStatusService();
+    } catch (error) {
+      return ThunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const adminTotalSells = createAsyncThunk(
+  "users/get-admin-totalSell",
+  async (ThunkAPI) => {
+    try {
+      return await adminTotalSellService();
+    } catch (error) {
+      return ThunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const adminTotalProducts = createAsyncThunk(
+  "users/get-admin-allProducts",
+  async (ThunkAPI) => {
+    try {
+      return await adminTotalProductsService();
+    } catch (error) {
+      return ThunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 //place order of  users
 //define an initial state
@@ -303,6 +336,9 @@ export const usersSlice = createSlice({
     generateExtraReducers(sellerGetAllTotalProducts, "sellerTotalProducts")(builder);
     generateExtraReducers(GetTotalUsers, "totalUsers")(builder);
     generateExtraReducers(sellerTotalOrderStatus, "sellerOrderCount")(builder);
+    generateExtraReducers(adminTotalOrderStatus, "adminOrderCount")(builder);
+    generateExtraReducers(adminTotalProducts, "adminProductList")(builder);
+    generateExtraReducers(adminTotalSells, "adminTotalSell")(builder);
     generateExtraReducers(
       getSellersSingleOrders,
       "sellersSingleOrderInfo"
