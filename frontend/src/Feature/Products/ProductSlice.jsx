@@ -3,6 +3,7 @@ import generateExtraReducers from "../GenerateExtraReducer";
 import {
   addSellerProductService,
   addSingleProductReview,
+  adminGetAllProductService,
   deleteImageFromCloudinaryService,
   deleteSellerProductService,
   getAllCategory,
@@ -190,6 +191,18 @@ export const addSellerProduct = createAsyncThunk(
     }
   }
 );
+
+export const adminGetAllProducts = createAsyncThunk(
+  "product/admin-getAllProducts",
+  async (ThunkAPI) => {
+    try {
+      // console.log(id);
+      return await adminGetAllProductService();
+    } catch (error) {
+      return ThunkAPI.rejectWithValue(error);
+    }
+  }
+);
 //declare initial state for auth - Chanable by requirements
 const initialState = {
   products: [],
@@ -219,6 +232,7 @@ export const productsSlice = createSlice({
     generateExtraReducers(deleteSellerProduct, "deleteSellerProduct")(builder);
     generateExtraReducers(uploadImgToCloudinary, "uploadImageToCloud")(builder);
     generateExtraReducers(addSellerProduct, "addSellerProduct")(builder);
+    generateExtraReducers(adminGetAllProducts, "adminProductList")(builder);
     generateExtraReducers(
       deleteImgFromCloudinary,
       "deleteImageFromCloud"

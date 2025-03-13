@@ -3,12 +3,15 @@ import generateExtraReducers from "../GenerateExtraReducer";
 import {
   AddToUsersCartService,
   addUsersAddressService,
+  adminGetAllOrderService,
+  adminGetAllTotalSellService,
   adminGetAllUsersService,
   cancleUsersOrderService,
   deleteUsersAddressService,
   getAllSellersOrderService,
   getSellersSingleOrderService,
   getSingleUserService,
+  GetTotalUsersService,
   getUserCartService,
   getUsersAddressService,
   getUsersOrderPaymentDetailService,
@@ -16,6 +19,8 @@ import {
   getUsersSingleOrderService,
   placeUsersOrderService,
   removeFromUsersCartService,
+  sellerGetAllTotalProductsService,
+  sellerTotalOrderStatusService,
   updateCartQuantityService,
 } from "./UserService";
 
@@ -212,6 +217,58 @@ export const adminGetAllUsers = createAsyncThunk(
     }
   }
 );
+
+export const adminGetAllOrderList = createAsyncThunk(
+  "users/admin-all-orders",
+  async (ThunkAPI) => {
+    try {
+      return await adminGetAllOrderService();
+    } catch (error) {
+      return ThunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const adminGetAllTotalSell = createAsyncThunk(
+  "users/admin-all-sell",
+  async (ThunkAPI) => {
+    try {
+      return await adminGetAllTotalSellService();
+    } catch (error) {
+      return ThunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const sellerGetAllTotalProducts = createAsyncThunk(
+  "users/seller-total-product",
+  async (ThunkAPI) => {
+    try {
+      return await sellerGetAllTotalProductsService();
+    } catch (error) {
+      return ThunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const GetTotalUsers = createAsyncThunk(
+  "users/get-total",
+  async (ThunkAPI) => {
+    try {
+      return await GetTotalUsersService();
+    } catch (error) {
+      return ThunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const sellerTotalOrderStatus = createAsyncThunk(
+  "users/get-total-orderstatus",
+  async (ThunkAPI) => {
+    try {
+      return await sellerTotalOrderStatusService();
+    } catch (error) {
+      return ThunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 //place order of  users
 //define an initial state
 const initialState = {
@@ -241,6 +298,11 @@ export const usersSlice = createSlice({
     generateExtraReducers(cancleUsersOrder, "canclledOrder")(builder);
     generateExtraReducers(getAllSellersOrders, "sellersOrderList")(builder);
     generateExtraReducers(adminGetAllUsers, "adminUserList")(builder);
+    generateExtraReducers(adminGetAllOrderList, "adminOrderList")(builder);
+    generateExtraReducers(adminGetAllTotalSell, "adminTotalSell")(builder);
+    generateExtraReducers(sellerGetAllTotalProducts, "sellerTotalProducts")(builder);
+    generateExtraReducers(GetTotalUsers, "totalUsers")(builder);
+    generateExtraReducers(sellerTotalOrderStatus, "sellerOrderCount")(builder);
     generateExtraReducers(
       getSellersSingleOrders,
       "sellersSingleOrderInfo"

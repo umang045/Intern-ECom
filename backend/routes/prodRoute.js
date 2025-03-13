@@ -24,10 +24,12 @@ const {
   getMinMaxPrice,
   getSingleProdRview,
   toogleSingleReview,
+  adminGetAllProductList,
 } = require("../controller/product");
 const { upload } = require("../middleware/uploadImg");
 const cloudinary = require("../utils/cloudinary");
 const { authMiddleware } = require("../middleware/authMiddleare");
+const { getOrderForAdmin } = require("../controller/user");
 
 const router = express.Router();
 
@@ -52,6 +54,8 @@ router.delete("/review/del/:review_id", delReview);
 router.post("/getUserReview", getUsersReview);
 
 router.post("/sellerProd/search", searchProd);
+router.get("/admin/getAllProduct",authMiddleware, adminGetAllProductList);
+
 router.post("/", authMiddleware , addProduct);
 router.put("/", updateProduct);
 router.delete("/:product_id", deleteProduct);

@@ -58,12 +58,12 @@ const MainAdminLayout = () => {
               label: "Sellers",
             },
             {
-              key: "sellerProductList",
+              key: "adminProductList",
               icon: <AiOutlineShoppingCart className="fs-4" />,
               label: "Product List",
             },
             {
-              key: "sellerOrderList",
+              key: "adminOrderList",
               icon: <FaClipboardList className="fs-4" />,
               label: "Order List",
             },

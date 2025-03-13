@@ -139,3 +139,12 @@ export const addSellerProductService = async (productData) => {
   );
   if (response.data) return response.data;
 };
+
+//get product all transaction
+export const adminGetAllProductService = async () => {
+  const response = await axios.get(
+    `${base_url}/product/admin/getAllProduct`,
+    config
+  );
+  if (response.data) return response.data;
+};

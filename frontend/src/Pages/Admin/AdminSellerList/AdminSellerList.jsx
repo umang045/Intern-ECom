@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Table } from "antd";
-import { FaEye } from "react-icons/fa";
 
 const AdminSellerList = () => {
   const dispatch = useDispatch();

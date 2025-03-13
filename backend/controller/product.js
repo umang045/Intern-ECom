@@ -514,10 +514,24 @@ const toogleSingleReview = async (req, res) => {
   }
 };
 
+//get all products for admin
+const adminGetAllProductList = async (req, res) => {
+  // const { product_id } = req.params;
+  // console.log(product_id);
+
+  try {
+    const [result] = await db.query("select * from products");
+    res.status(200).json(result);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 module.exports = {
   getUsersReview,
   getSingleProdRview,
   getFilteredProducts,
+  adminGetAllProductList,
   getAllCategory,
   getMinMaxPrice,
   getProdTrans,

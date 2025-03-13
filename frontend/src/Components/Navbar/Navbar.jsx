@@ -52,7 +52,7 @@ const Navbar = () => {
     shallowEqual
   );
 
-  console.log(userInfo, userInfo?.role != "user", isLogin());
+  // console.log(userInfo, userInfo?.role != "user", isLogin());
 
   //*******************fetch End********************** */
 
@@ -158,6 +158,7 @@ const Navbar = () => {
                       onClick={() => {
                         localStorage.clear();
                         navigate("/");
+                        window.location.reload();
                       }}
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                     >

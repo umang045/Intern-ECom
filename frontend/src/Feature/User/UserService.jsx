@@ -117,3 +117,40 @@ export const adminGetAllUsersService = async () => {
   const response = await axios.get(`${base_url}/user/find/all`, config);
   if (response.data) return response.data;
 };
+
+export const adminGetAllOrderService = async () => {
+  const response = await axios.get(
+    `${base_url}/user/admin/getOrdersForAdmin`,
+    config
+  );
+  if (response.data) return response.data;
+};
+
+export const adminGetAllTotalSellService = async () => {
+  const response = await axios.get(
+    `${base_url}/user/seller/getAllSellCount`,
+    config
+  );
+  if (response.data) return response.data;
+};
+export const sellerGetAllTotalProductsService = async () => {
+  const response = await axios.get(
+    `${base_url}/user/seller/getAllProdCount`,
+    config
+  );
+  if (response.data) return response.data;
+};
+export const GetTotalUsersService = async () => {
+  const response = await axios.get(
+    `${base_url}/user/totalUser`,
+    config
+  );
+  if (response.data) return response.data;
+};
+export const sellerTotalOrderStatusService = async () => {
+  const response = await axios.get(
+    `${base_url}/user/seller/getOrderStatusCount`,
+    config
+  );
+  if (response.data) return response.data;
+};

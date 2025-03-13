@@ -39,6 +39,7 @@ const { updateProfilePic } = require("../controller/auth");
 const { authMiddleware } = require("../middleware/authMiddleare");
 const router = express.Router();
 
+// router.get("/admin/getAllOrder",authMiddleware, getOrderForAdmin);
 router.get("/seller/getOrder", authMiddleware, fetchSellerOrders);
 router.get(
   "/getUsersOrdersPaymentDetails/:order_id",
@@ -89,7 +90,6 @@ router.put("/updatePic", authMiddleware, updateProfilePic);
 router.delete("/delCart/:id", removeFromCart);
 router.put("/updtQnty", authMiddleware, updateQuantity);
 
-
 router.get(
   "/seller/filterOrder/status/:status",
   authMiddleware,
@@ -99,3 +99,4 @@ router.post("/seller/onoffschedule", authMiddleware, onOffEvent);
 router.get("/seller/getSinlgeOrder/:order_id", fetchSingleSellerOrders);
 
 module.exports = router;
+

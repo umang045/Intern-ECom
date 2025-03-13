@@ -419,7 +419,7 @@ const delUserOrder = async (req, res) => {
 //fetch Seller Products
 const fetchSellerOrders = async (req, res) => {
   // const { seller_id } = req.params;
-  const seller_id = req.userId
+  const seller_id = req.userId;
   try {
     const [result] = await db.query("call getSellerOrders(?)", [seller_id]);
     res.status(200).json(result[0]);
@@ -576,7 +576,7 @@ const getSellersAmountCount = async (req, res) => {
   const seller_id = req.userId;
   try {
     const [resultSets, fields] = await db.query(
-      "select sum(amount) as totalSellerSell from orders where seller_id =? and status = 'Delivered'",
+      "select p.seller_id,count(p.seller_id) as orders,sum((o.quantity*o.price)) as sell from order_items o inner join products p on p.product_id=o.product_id where seller_id= ? group by p.seller_id",
       [seller_id]
     );
     res.status(200).json(resultSets[0]);

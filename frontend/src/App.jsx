@@ -63,6 +63,14 @@ const AdminHomePage = lazy(() =>
   import("./Pages/Admin/AdminHomePage/AdminHomePage")
 );
 
+const AdminProductList = lazy(() =>
+  import("./Pages/Admin/AdminProductList/AdminProductList")
+);
+
+const AdminOrderList = lazy(() =>
+  import("./Pages/Admin/AdminOrderList/AdminOrderPage")
+);
+
 const App = () => {
   const [role, setRole] = useState("admin");
 
@@ -110,7 +118,7 @@ const App = () => {
               />
             }
           >
-             <Route path="" element={<SellerHomePage />} />{" "}
+            <Route path="" element={<SellerHomePage />} />{" "}
             <Route path="addProduct" element={<SellerAddProduct />} />{" "}
             <Route path="sellerProductList" element={<SellerProductList />} />{" "}
             <Route
@@ -136,6 +144,16 @@ const App = () => {
             <Route path="" element={<AdminHomePage />} />{" "}
             <Route path="adminUserList" element={<AdminUserList />} />{" "}
             <Route path="adminSellerList" element={<AdminSellerList />} />{" "}
+            <Route path="adminOrderList" element={<AdminOrderList />} />{" "}
+            <Route path="adminProductList" element={<AdminProductList />} />{" "}
+            <Route
+              path="adminProductList/transaction/:product_id"
+              element={<SellerProductTransaction />}
+            />{" "}
+            <Route
+              path="adminOrderList/:order_id"
+              element={<SellerSingleOrder />}
+            />
           </Route>
         </Routes>
         <Footer></Footer>

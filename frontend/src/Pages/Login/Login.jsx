@@ -75,6 +75,7 @@ const Login = () => {
     onSubmit: async (values) => {
       let res = await dispatch(loginUser(values));
       if (loginUser.fulfilled.match(res)) {
+        window.location.reload();
         toast.success("Login Successfull!!");
         isLogin();
         dispatch(getSingleUser());
