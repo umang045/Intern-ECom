@@ -15,6 +15,7 @@ const Navbar = () => {
   //check is login or not?
   useEffect(() => {
     isLogin();
+
   }, [isLogin()]);
 
   useGSAP(() => {
@@ -41,15 +42,17 @@ const Navbar = () => {
   //*******************fetch Start********************** */
 
   useEffect(() => {
+    if (isLogin()) {
     dispatch(getUsersCart());
-    dispatch(getSingleUser());
-  }, [dispatch]);
+    dispatch(getSingleUser())}
+  }, [dispatch , isLogin()]);
 
   const { usersCart, userInfo, isLoading } = useSelector(
     (state) => state.user,
     shallowEqual
   );
-  // console.log(userInfo);
+
+  console.log(userInfo, userInfo?.role != "user", isLogin());
 
   //*******************fetch End********************** */
 
@@ -154,7 +157,7 @@ const Navbar = () => {
                     <div
                       onClick={() => {
                         localStorage.clear();
-                        navigate("/home");
+                        navigate("/");
                       }}
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                     >

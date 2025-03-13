@@ -13,6 +13,7 @@ const AdminUserList = () => {
   }, [dispatch]);
 
   const { adminUserList } = useSelector((state) => state?.user);
+
   const columns = [
     {
       title: "User ID",
@@ -39,7 +40,7 @@ const AdminUserList = () => {
       className: "py-2 px-4",
     },
   ];
-  
+
   return (
     <>
       <div className="container mx-auto p-4  bg-gray-50">

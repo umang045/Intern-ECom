@@ -34,21 +34,33 @@ const SellerAddProduct = lazy(() =>
 const SellerProductList = lazy(() =>
   import("./Pages/Seller/SellerProductList/SellerProductList")
 );
+
 const SellerOrderList = lazy(() =>
   import("./Pages/Seller/SellerOrderList/SellerOrderList")
 );
+
 const SellerSingleOrder = lazy(() =>
   import("./Pages/Seller/SellersSingleOrder/SellerSingleOrder")
 );
+
 const SellerProductTransaction = lazy(() =>
   import("./Pages/Seller/SellerProductTransaction/SellerProdTran")
+);
+
+const SellerHomePage = lazy(() =>
+  import("./Pages/Seller/SellerHomePage/SellerHomePage")
 );
 
 const AdminUserList = lazy(() =>
   import("./Pages/Admin/AdminUserList/AdminUserList")
 );
+
 const AdminSellerList = lazy(() =>
   import("./Pages/Admin/AdminSellerList/AdminSellerList")
+);
+
+const AdminHomePage = lazy(() =>
+  import("./Pages/Admin/AdminHomePage/AdminHomePage")
 );
 
 const App = () => {
@@ -98,6 +110,7 @@ const App = () => {
               />
             }
           >
+             <Route path="" element={<SellerHomePage />} />{" "}
             <Route path="addProduct" element={<SellerAddProduct />} />{" "}
             <Route path="sellerProductList" element={<SellerProductList />} />{" "}
             <Route
@@ -120,6 +133,7 @@ const App = () => {
             }
           >
             {" "}
+            <Route path="" element={<AdminHomePage />} />{" "}
             <Route path="adminUserList" element={<AdminUserList />} />{" "}
             <Route path="adminSellerList" element={<AdminSellerList />} />{" "}
           </Route>

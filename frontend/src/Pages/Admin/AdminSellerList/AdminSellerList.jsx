@@ -41,6 +41,7 @@ const AdminSellerList = () => {
       className: "py-2 px-4",
     },
   ];
+
   return (
     <>
       <div className="container mx-auto p-4  bg-gray-50">
@@ -55,6 +56,7 @@ const AdminSellerList = () => {
       </div>
     </>
   );
+
 };
 
 export default AdminSellerList;

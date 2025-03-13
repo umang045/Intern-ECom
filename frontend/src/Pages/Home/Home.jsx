@@ -44,7 +44,16 @@ const Home = () => {
   //*************************Fetch Start *************** */
   useEffect(() => {
     isLogin();
-    isLogin() ? dispatch(getSingleUser()) : null;
+    // isLogin() ? dispatch(getSingleUser()) : null;
+  }, [isLogin(), dispatch]);
+  // console.log(isLogin());
+
+  useEffect(() => {
+    console.log(isLogin());
+    if (isLogin()) {
+      // console.log("fetch user");
+      dispatch(getSingleUser());
+    }
   }, [isLogin(), dispatch]);
 
   useEffect(() => {
