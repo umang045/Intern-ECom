@@ -131,7 +131,7 @@ const forgotPass = async (req, res, next) => {
 const resetPass = async (req, res, next) => {
   const { passwordResetToken } = req.params;
   const { newPassword } = req.body;
-  console.log(passwordResetToken , newPassword);
+  console.log(passwordResetToken, newPassword);
 
   let user_id, del_id;
 
@@ -184,8 +184,7 @@ const updateUserProfile = async (req, res) => {
     const { email, name, mobile } = req.body;
     const user_id = req.userId;
 
-    console.log(email, name, mobile , user_id);
-    
+    console.log(email, name, mobile, user_id);
 
     const [resultSets, fields] = await db.query("CALL updateProfile(?,?,?,?)", [
       email,
@@ -205,12 +204,15 @@ const updateUserProfile = async (req, res) => {
 //update profile pic
 const updateProfilePic = async (req, res) => {
   try {
-    const { profile_pic, user_id } = req.body;
+    const { profile_pic, img_public_id } = req.body;
+    console.log(profile_pic, img_public_id);
 
-    const [resultSets, fields] = await db.query("CALL updateProfilePic(?,?)", [
-      profile_pic,
-      user_id,
-    ]);
+    const user_id = req.userId;
+
+    const [resultSets, fields] = await db.query(
+      "CALL updateProfilePic(?,?,?)",
+      [profile_pic, img_public_id, user_id]
+    );
 
     res.status(200).json({ message: "Profile Updated Succesfully" });
   } catch (error) {
@@ -221,7 +223,7 @@ const updateProfilePic = async (req, res) => {
 //checkPas
 const chekPassword = async (req, res) => {
   const { user_id, password } = req.params;
-  console.log(user_id, password);
+  // console.log(user_id, password);
   try {
     const [resultSets, fields] = await db.query("CALL checkPass(?)", [user_id]);
     const checkPass = bcrypt.compareSync(password, resultSets[0][0]?.password);
@@ -237,19 +239,33 @@ const chekPassword = async (req, res) => {
 //update Password
 const updatePassword = async (req, res) => {
   try {
-    const { user_id, new_password } = req.body;
-    // console.log(user_id);
+    const { oldPassword, newPassword } = req.body;
+    const user_id = req.userId;
 
+    // Fetch current password hash from the database
+    const [resultSets, fields] = await db.query("CALL checkPass(?)", [user_id]);
+    const storedPassword = resultSets[0][0]?.password;
+
+    if (!storedPassword) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    // Check if the old password matches
+    const isMatch = bcrypt.compareSync(oldPassword, storedPassword);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Old password is incorrect" });
+    }
+
+    // Hash the new password
     const salt = bcrypt.genSaltSync(10);
-    const hashPass = bcrypt.hashSync(new_password, salt);
-    const [resultSets, fields] = await db.query("CALL updatePass(?,?)", [
-      user_id,
-      hashPass,
-    ]);
+    const hashPass = bcrypt.hashSync(newPassword, salt);
 
-    res.status(200).json({ message: "user Pass Updated SuccesFully!!" });
+    // Update the password in the database
+    await db.query("CALL updatePass(?, ?)", [user_id, hashPass]);
+
+    res.status(200).json({ message: "Password updated successfully!" });
   } catch (error) {
-    console.error("Error fetching users:", error.message);
+    console.error("Error updating password:", error.message);
     res.status(500).send("Internal Server Error");
   }
 };

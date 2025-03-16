@@ -86,10 +86,11 @@ const Products = () => {
   // console.log(totalProducts);
 
   useEffect(() => {
-    // console.log(totalProducts[0]?.count);
+    // console.log(totalProducts?.[0]?.count);
+
     setTotalPage(Math.ceil(totalProducts?.[0]?.count / 10));
     // console.log(totalPage);
-  });
+  }, [totalProducts, dispatch]);
 
   //********************fetch End********************* */
 
@@ -147,9 +148,12 @@ const Products = () => {
                     <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
                       Filters
                     </h2>
-                    <button className="bg-gray-900 text-white p-1 rounded-lg" onClick={()=>{
-                      window.location.reload();
-                    }}>
+                    <button
+                      className="bg-gray-900 text-white p-1 rounded-lg"
+                      onClick={() => {
+                        window.location.reload();
+                      }}
+                    >
                       Clear All Filter
                     </button>{" "}
                   </div>

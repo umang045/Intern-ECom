@@ -99,6 +99,7 @@ const Login = () => {
       const res = await dispatch(sendMail(values));
       if (sendMail.fulfilled.match(res)) {
         toast.success("Mail Sent Successfully!!");
+        setIsModalOpen(false);
       } else {
         toast.error("Invalid Email");
       }

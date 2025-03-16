@@ -175,3 +175,11 @@ export const adminTotalProductsService = async () => {
   );
   if (response.data) return response.data;
 };
+export const userUpdateProdilePicService = async (data) => {
+  const response = await axios.post(
+    `${base_url}/auth/updateProfilePic`,
+    data,
+    config
+  );
+  if (response.data) return response.data;
+};

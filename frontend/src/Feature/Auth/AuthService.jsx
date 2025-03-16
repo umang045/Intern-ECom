@@ -47,12 +47,23 @@ const updateProfileService = async (data) => {
     data,
     config
   );
-  if (response.data) return res.data;
+  if (response.data) return response.data;
 };
+const updateUserPasswordFromProfileService = async (data) => {
+  const response = await axios.put(
+    `${base_url}/auth/updatePass`,
+    data,
+    config
+  );
+  if (response.data) return response.data;
+};
+
+
 
 export const authService = {
   loginUser,
   registerUser,
+  updateUserPasswordFromProfileService,
   updateProfileService,
   sendMail,
   updateUserPassword,

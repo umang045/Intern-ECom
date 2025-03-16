@@ -11,15 +11,24 @@ import {
   deleteUsersAddress,
   getSingleUser,
   getUsersAddress,
+  userUpdateProdilePic,
 } from "@/Feature/User/UserSlice";
 import { toast } from "react-toastify";
-import { updateProfile } from "@/Feature/Auth/AuthSlice";
+import {
+  updateProfile,
+  updateUserPasswordFromProfile,
+} from "@/Feature/Auth/AuthSlice";
+import {
+  deleteImgFromCloudinary,
+  uploadImgToCloudinary,
+} from "@/Feature/Products/ProductSlice";
 
 const Profile = () => {
   const dispatch = useDispatch();
 
   const [isPasswordModalVisible, setIsPasswordModalVisible] = useState(false);
   const [isAddressModalVisible, setIsAddressModalVisible] = useState(false);
+  const [cloudImagePublicId, setCloudImagePublicId] = useState(null);
   const [profileImgUrl, setProfileImgUrl] = useState(
     "https://via.placeholder.com/150"
   );
@@ -38,14 +47,43 @@ const Profile = () => {
     setIsPasswordModalVisible(false);
   };
 
-  const handleFile = (e) => {
+  const handleFile = async (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      setProfileImgUrl(reader.result);
-    };
-    reader.readAsDataURL(file);
+    const formData = new FormData();
+    formData.append("image", file);
+
+    // Delete old image if it exists
+    if (cloudImagePublicId) {
+      await dispatch(deleteImgFromCloudinary(cloudImagePublicId));
+    }
+
+    // Wait for image upload to complete
+    const res = await dispatch(uploadImgToCloudinary(formData));
+
+    if (uploadImgToCloudinary.fulfilled.match(res)) {
+      const uploadedImage = res.payload?.data;
+      if (uploadedImage) {
+        setProfileImgUrl(uploadedImage.url);
+        setCloudImagePublicId(uploadedImage.public_id);
+
+        // Now update profile picture only after upload is complete
+        await dispatch(
+          userUpdateProdilePic({
+            profile_pic: uploadedImage.url,
+            img_public_id: uploadedImage.public_id,
+          })
+        );
+
+        await dispatch(getSingleUser());
+
+        toast.success("Profile picture updated successfully!");
+      }
+    } else {
+      toast.error("Image upload failed!");
+    }
   };
+
+  // console.log(profileImgUrl , cloudImagePublicId);
 
   const openAddressDialog = () => {
     setIsAddressModalVisible(true);
@@ -118,6 +156,23 @@ const Profile = () => {
     shallowEqual
   );
 
+  const { uploadImageToCloud } = useSelector(
+    (state) => state?.products,
+    shallowEqual
+  );
+
+  useEffect(() => {
+    setCloudImagePublicId(uploadImageToCloud?.data?.public_id);
+    setProfileImgUrl(uploadImageToCloud?.data?.url);
+  }, [dispatch, uploadImageToCloud]);
+
+  useEffect(() => {
+    // setCloudImagePublicId(user)
+    setCloudImagePublicId(userInfo?.img_public_id);
+    setProfileImgUrl(userInfo?.img_url);
+  }, [userInfo, dispatch]);
+  // console.log(cloudImagePublicId);
+
   useEffect(() => {
     if (userInfo && usersAddress) {
       setMarkers(
@@ -148,12 +203,9 @@ const Profile = () => {
             }}
             validationSchema={validationSchema}
             onSubmit={(values) => {
-              console.log(values);
-              // message.success("Profile updated successfully");
-              dispatch(updateProfile(data)).then(() => {
+              dispatch(updateProfile(values)).then(() => {
                 toast.success("Profile Updated Succesfully!!");
               });
-
             }}
           >
             {({ isSubmitting }) => (
@@ -291,10 +343,11 @@ const Profile = () => {
             oldPassword: Yup.string().required("This is required!"),
             newPassword: Yup.string().required("This is required!"),
           })}
-          onSubmit={(values) => {
-            console.log(values);
-            message.success("Password updated successfully");
-            handlePasswordModalOk();
+          onSubmit={async (values) => {
+            const res = await dispatch(updateUserPasswordFromProfile(values));
+            if (updateUserPasswordFromProfile.fulfilled.match(res)) {
+              toast.success("PassWord Updated!!");
+            }
           }}
         >
           {({ isSubmitting }) => (

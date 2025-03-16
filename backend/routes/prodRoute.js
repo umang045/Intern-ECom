@@ -37,7 +37,7 @@ const router = express.Router();
 
 router.put("/updateProducts", authMiddleware, updateProduct);
 router.get("/admin/getAllProduct",authMiddleware, adminGetAllProductList  );
-router.get("/getAllProductCount",authMiddleware, getProductCount  );
+router.get("/getAllProductCount", getProductCount  );
 router.get("/getAllProductColors/:product_id",authMiddleware, getProductsColor  );
 router.get("/sellerProd",authMiddleware , getProductsBySellerId);
 router.get("/getAllReviews", getUsersReview);

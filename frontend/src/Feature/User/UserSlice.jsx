@@ -25,6 +25,7 @@ import {
   sellerGetAllTotalProductsService,
   sellerTotalOrderStatusService,
   updateCartQuantityService,
+  userUpdateProdilePicService,
 } from "./UserService";
 
 //get users
@@ -301,6 +302,17 @@ export const adminTotalProducts = createAsyncThunk(
     }
   }
 );
+export const userUpdateProdilePic = createAsyncThunk(
+  "users/update-profilepic",
+  async (data ,ThunkAPI) => {
+    try {
+
+      return await userUpdateProdilePicService(data);
+    } catch (error) {
+      return ThunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 //place order of  users
 //define an initial state
@@ -339,6 +351,7 @@ export const usersSlice = createSlice({
     generateExtraReducers(adminTotalOrderStatus, "adminOrderCount")(builder);
     generateExtraReducers(adminTotalProducts, "adminProductList")(builder);
     generateExtraReducers(adminTotalSells, "adminTotalSell")(builder);
+    generateExtraReducers(userUpdateProdilePic, "updateProfilePic")(builder);
     generateExtraReducers(
       getSellersSingleOrders,
       "sellersSingleOrderInfo"
