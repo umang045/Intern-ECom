@@ -13,6 +13,7 @@ import {
   getUsersAddress,
 } from "@/Feature/User/UserSlice";
 import { toast } from "react-toastify";
+import { updateProfile } from "@/Feature/Auth/AuthSlice";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -141,14 +142,18 @@ const Profile = () => {
           <Formik
             enableReinitialize
             initialValues={{
-              name: userInfo?.name || " ",          
+              name: userInfo?.name || " ",
               email: userInfo?.email || " ",
               mobile: userInfo?.mobile || " ",
             }}
             validationSchema={validationSchema}
             onSubmit={(values) => {
               console.log(values);
-              message.success("Profile updated successfully");
+              // message.success("Profile updated successfully");
+              dispatch(updateProfile(data)).then(() => {
+                toast.success("Profile Updated Succesfully!!");
+              });
+
             }}
           >
             {({ isSubmitting }) => (

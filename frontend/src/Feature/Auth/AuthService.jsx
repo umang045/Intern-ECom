@@ -32,18 +32,28 @@ const sendMail = async (data) => {
 
 //update password
 const updateUserPassword = async (data) => {
-  console.log(data?.token);
-
+  console.log(data);
   const response = await axios.patch(
-    `${base_url}/auth/reset/:${data?.token}`,
-    data
+    `${base_url}/auth/reset/${data?.token}`,
+    data,
+    config
   );
   if (response.data) return response.data;
+};
+
+const updateProfileService = async (data) => {
+  const response = await axios.put(
+    `${base_url}/auth/updateProfile`,
+    data,
+    config
+  );
+  if (response.data) return res.data;
 };
 
 export const authService = {
   loginUser,
   registerUser,
+  updateProfileService,
   sendMail,
   updateUserPassword,
 };

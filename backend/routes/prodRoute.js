@@ -25,6 +25,8 @@ const {
   getSingleProdRview,
   toogleSingleReview,
   adminGetAllProductList,
+  getProductCount,
+  getProductsColor,
 } = require("../controller/product");
 const { upload } = require("../middleware/uploadImg");
 const cloudinary = require("../utils/cloudinary");
@@ -33,7 +35,10 @@ const { getOrderForAdmin } = require("../controller/user");
 
 const router = express.Router();
 
-router.get("/admin/getAllProduct",authMiddleware, adminGetAllProductList);
+router.put("/updateProducts", authMiddleware, updateProduct);
+router.get("/admin/getAllProduct",authMiddleware, adminGetAllProductList  );
+router.get("/getAllProductCount",authMiddleware, getProductCount  );
+router.get("/getAllProductColors/:product_id",authMiddleware, getProductsColor  );
 router.get("/sellerProd",authMiddleware , getProductsBySellerId);
 router.get("/getAllReviews", getUsersReview);
 router.get("/getSellerTotalProd", authMiddleware, getSellerTotalProd);
@@ -57,7 +62,6 @@ router.post("/getUserReview", getUsersReview);
 router.post("/sellerProd/search", searchProd);
 
 router.post("/", authMiddleware , addProduct);
-router.put("/", updateProduct);
 router.delete("/:product_id", deleteProduct);
 router.post("/image/upload", upload.single("image"), uploadImg);
 router.delete("/image/del/:public_id", delImage);

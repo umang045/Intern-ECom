@@ -13,6 +13,17 @@ const getAllProduct = async (req, res) => {
   }
 };
 
+const getProductCount = async (req, res) => {
+  try {
+    const [resultSets] = await db.query(
+      "select count(*) as count from products WHERE is_active = true;"
+    );
+    return res.status(200).json(resultSets);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 // const getAlllProduct = async (req, res) => {
 //   try {
 //     const {
@@ -214,6 +225,7 @@ const addProduct = async (req, res) => {
     colors,
     product_tag,
     product_tag_color,
+    public_id,
     tag_active,
   } = req.body;
 
@@ -222,7 +234,7 @@ const addProduct = async (req, res) => {
 
   try {
     const [result] = await db.query(
-      "call manageSellerProduct('addProd',?,?,?,?,?,?,?,?,?,?,?,?)",
+      "call manageSellerProduct('addProd',?,?,?,?,?,?,?,?,?,?,?,?,?)",
       [
         category_id,
         seller_id,
@@ -235,6 +247,7 @@ const addProduct = async (req, res) => {
         product_tag,
         product_tag_color,
         tag_active,
+        public_id,
         null,
       ]
     );
@@ -267,7 +280,7 @@ const addProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
   const {
     category_id,
-    seller_id,
+
     image,
     title,
     description,
@@ -277,15 +290,19 @@ const updateProduct = async (req, res) => {
     product_tag,
     product_tag_color,
     tag_active,
+    public_id,
     product_id,
   } = req.body;
+
+  const seller_id = req.userId;
+
   try {
     const result = await db.query(
-      "call manageSellerProduct('updateProd',?,?,?,?,?,?,?,?,?,?,?,?)",
+      "call manageSellerProduct('updateProd',?,?,?,?,?,?,?,?,?,?,?,?,?)",
       [
         category_id,
         seller_id,
-        null,
+        JSON.stringify(size),
         price,
         stock,
         image,
@@ -294,6 +311,7 @@ const updateProduct = async (req, res) => {
         product_tag,
         product_tag_color,
         tag_active,
+        public_id,
         product_id,
       ]
     );
@@ -442,6 +460,7 @@ const getFilteredProducts = async (req, res) => {
     max_price = null,
     selected_color_id = null,
     sort_option = "latest",
+    current_page,
   } = req.query;
   try {
     const [rows] = await db.query("CALL filetrProducts(?, ?, ?, ?, ?,?,?)", [
@@ -450,8 +469,8 @@ const getFilteredProducts = async (req, res) => {
       max_price,
       selected_color_id,
       sort_option,
-      1,
-      8,
+      current_page,
+      10,
     ]);
     res.json(rows[0]);
   } catch (error) {
@@ -527,9 +546,24 @@ const adminGetAllProductList = async (req, res) => {
   }
 };
 
+const getProductsColor = async (req, res) => {
+  const { product_id } = req.params;
+  try {
+    const [resultSet] = await db.query(
+      "SELECT * FROM colors where product_id = ?",
+      [product_id]
+    );
+    return res.status(200).json(resultSet);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 module.exports = {
   getUsersReview,
+  getProductsColor,
   getSingleProdRview,
+  getProductCount,
   getFilteredProducts,
   adminGetAllProductList,
   getAllCategory,

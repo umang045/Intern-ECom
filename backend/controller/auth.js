@@ -97,7 +97,7 @@ const forgotPass = async (req, res, next) => {
         resultSets[0][0].user_id,
       ]);
       // return res.json(result[0])
-      const resetUrl = `http://localhost:4200/reset/${passwordResetToken}`;
+      const resetUrl = `http://localhost:5173/resetPassword/${passwordResetToken}`;
       const message = "Reset mail below";
       const html = `
         <p>We have received a password reset request. Please use the link below to reset your password:</p>
@@ -130,9 +130,9 @@ const forgotPass = async (req, res, next) => {
 //reset password
 const resetPass = async (req, res, next) => {
   const { passwordResetToken } = req.params;
-  console.log(passwordResetToken);
-
   const { newPassword } = req.body;
+  console.log(passwordResetToken , newPassword);
+
   let user_id, del_id;
 
   // return res.status(200).json({ token, passwordResetToken });
@@ -183,6 +183,9 @@ const updateUserProfile = async (req, res) => {
   try {
     const { email, name, mobile } = req.body;
     const user_id = req.userId;
+
+    console.log(email, name, mobile , user_id);
+    
 
     const [resultSets, fields] = await db.query("CALL updateProfile(?,?,?,?)", [
       email,

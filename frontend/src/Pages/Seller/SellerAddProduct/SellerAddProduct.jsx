@@ -2,15 +2,26 @@ import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
-import { Input, Button, Select, Switch, Modal, ColorPicker, Image } from "antd";
+import {
+  Input,
+  Button,
+  Skeleton,
+  Select,
+  Switch,
+  Modal,
+  ColorPicker,
+  Image,
+} from "antd";
 import { useDropzone } from "react-dropzone";
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   addSellerProduct,
   deleteImgFromCloudinary,
+  getAllProductColor,
+  sellerUpdateProduct,
   uploadImgToCloudinary,
 } from "@/Feature/Products/ProductSlice";
 import { MdDelete } from "react-icons/md";
@@ -25,6 +36,16 @@ let addProductSchema = yup.object({
 const SellerAddProduct = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const editProductData = location?.state;
+  const { product_id } = useParams();
+
+  useEffect(() => {
+    if (product_id != undefined) {
+      dispatch(getAllProductColor(product_id));
+    }
+  }, [product_id]);
+  // console.log(product_id);
 
   const { quill, quillRef } = useQuill();
   const [description, setDescription] = useState("");
@@ -40,15 +61,47 @@ const SellerAddProduct = () => {
   const [tagActive, setTagActive] = useState(false);
   const [cloudImagePublicId, setCloudImagePublicId] = useState(null);
 
+  useEffect(() => {
+    if (editProductData) {
+      setSelectedSizes(editProductData?.size || []);
+      setTag(editProductData?.product_tag || "");
+      setSelectedTagColor(editProductData?.product_tag_color || "#ffffff");
+      setTagActive(editProductData?.tag_active || false);
+      setUploadedImgUrl(editProductData?.image || null);
+      setCloudImagePublicId(editProductData?.img_public_id || null);
+      // selectedSizes =
+    }
+  }, [editProductData]);
+
+  // console.log(cloudImagePublicId);
+
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      title: "",
-      category_id: "",
-      price: "",
-      stock: "",
+      title: editProductData?.title || "",
+      category_id: editProductData?.category_id || "",
+      price: editProductData?.price || "",
+      stock: editProductData?.stock || "",
     },
     validationSchema: addProductSchema,
     onSubmit: async (values) => {
+      let errors = [];
+      if (!description.trim()) {
+        errors.push("Product description is required!");
+      }
+      if (!selectedSizes.length) {
+        errors.push("At least one size must be selected!");
+      }
+      if (!colors.length) {
+        errors.push("At least one color must be selected!");
+      }
+      if (!uploadedImgUrl) {
+        errors.push("Product image is required!");
+      }
+      if (errors.length > 0) {
+        errors.forEach((err) => toast.info(err));
+        return;
+      }
       const addProdData = {
         ...values,
         product_tag: tag,
@@ -58,14 +111,25 @@ const SellerAddProduct = () => {
         description: description,
         colors: colors,
         image: uploadedImgUrl,
+        public_id: cloudImagePublicId,
+        product_id: product_id != undefined ? product_id : null,
       };
-      // console.log(addProdData);
-      const res = await dispatch(addSellerProduct(addProdData));
-      if (addSellerProduct?.fulfilled?.match(res)) {
-        toast.success("Product Added!!");
-        setTimeout(() => {
-          navigate("/seller/sellerProductList");
-        },1000);
+      if (product_id != undefined) {
+        const res = await dispatch(sellerUpdateProduct(addProdData));
+        if (sellerUpdateProduct?.fulfilled?.match(res)) {
+          toast.success("Product Updated!!");
+          setTimeout(() => {
+            navigate("/seller/sellerProductList");
+          }, 1000);
+        }
+      } else {
+        const res = await dispatch(addSellerProduct(addProdData));
+        if (addSellerProduct?.fulfilled?.match(res)) {
+          toast.success("Product Added!!");
+          setTimeout(() => {
+            navigate("/seller/sellerProductList");
+          }, 1000);
+        }
       }
     },
   });
@@ -76,7 +140,10 @@ const SellerAddProduct = () => {
         setDescription(quill.root.innerHTML);
       });
     }
-  }, [quill]);
+    if (quill && editProductData?.description) {
+      quill.root.innerHTML = editProductData.description;
+    }
+  }, [quill, editProductData]);
 
   const addColors = (value) => {
     setColors([...colors, value]);
@@ -95,12 +162,18 @@ const SellerAddProduct = () => {
       : dispatch(uploadImgToCloudinary(formData));
   };
 
-  const { uploadImageToCloud, isLoading } = useSelector(
+  const { uploadImageToCloud, productColorList, isLoading } = useSelector(
     (state) => state?.products,
     shallowEqual
   );
-  console.log(uploadImageToCloud?.data?.url);
-  console.log(uploadImageToCloud?.data?.public_id);
+  useEffect(() => {
+    if (product_id != undefined && productColorList) {
+      setColors((prevColors) => [
+        ...prevColors,
+        ...productColorList?.map((item) => item?.color_code),
+      ]);
+    }
+  }, [productColorList, product_id]);
 
   useEffect(() => {
     if (uploadImageToCloud) {
@@ -115,7 +188,10 @@ const SellerAddProduct = () => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg ">
-      <h1 className="text-2xl font-bold mb-4">Add Product</h1>
+      <h1 className="text-2xl font-bold mb-4">
+        {" "}
+        {product_id != undefined ? "Edit" : "ADD"} Product
+      </h1>
       <form action="" onSubmit={formik.handleSubmit}>
         <div className="flex flex-col space-y-1">
           <label
@@ -165,6 +241,7 @@ const SellerAddProduct = () => {
               onChange={formik.handleChange("category_id")}
               onBlur={formik.handleBlur("category_id")}
             >
+              {/* <Option value=""></Option> */}
               <Option value="1">mens</Option>
               <Option value="2">womens</Option>
               <Option value="3">kids</Option>
@@ -227,6 +304,7 @@ const SellerAddProduct = () => {
               id="product-category"
               name="category_id"
               mode="multiple"
+              value={selectedSizes}
               placeholder="Select Size"
               onChange={(value) => {
                 setSelectedSizes(value);
@@ -256,12 +334,15 @@ const SellerAddProduct = () => {
                 return (
                   <div
                     key={index}
-                    className="h-6 w-6 m-1 rounded-full"
+                    className="relative h-6 w-6 m-1 rounded-full cursor-pointer group"
                     style={{ backgroundColor: `${item}` }}
-                    onClick={() => {
-                      removeColors(index);
-                    }}
-                  ></div>
+                  >
+                    <MdDelete
+                      size={30}
+                      className="absolute text-red-500 bg-transparent h-full w-full rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition duration-300"
+                      onClick={() => removeColors(index)}
+                    />
+                  </div>
                 );
               })}
             </div>
@@ -277,6 +358,7 @@ const SellerAddProduct = () => {
               <Select
                 id="product-category"
                 name="category_id"
+                value={tag}
                 placeholder="Select Tags"
                 onChange={(value) => {
                   setTag(value);
@@ -294,7 +376,13 @@ const SellerAddProduct = () => {
                   setSelectedTagColor(value?.toHexString());
                 }}
               />
-              <Switch defaultChecked />{" "}
+              <Switch
+                // defaultChecked
+                value={tagActive}
+                onChange={(value) => {
+                  setTagActive(value);
+                }}
+              />{" "}
             </div>
           </div>
         </div>
@@ -317,7 +405,17 @@ const SellerAddProduct = () => {
           {uploadedImgUrl && (
             <>
               <div className="relative mt-2 inline-block rounded-lg">
-                <Image width={200} src={uploadedImgUrl} className="rounde-lg" />
+                {/* <Image width={200} src={uploadedImgUrl} className="rounde-lg" /> */}
+                {isLoading ? (
+                  <Skeleton.Image style={{ width: 200, height: 200 }} />
+                ) : (
+                  <Image
+                    width={200}
+                    src={uploadedImgUrl}
+                    className="rounde-lg"
+                  />
+                )}
+
                 <div className="absolute top-0 right-0">
                   <MdDelete
                     color="red"
@@ -340,10 +438,11 @@ const SellerAddProduct = () => {
         </div>
         <div className="w-full flex items-center justify-center">
           <button
+            disabled={isLoading}
             type="submit"
             className="bg-gray-950 mt-2 w-1/3 font-bold text-lg p-2 rounded-lg text-white"
           >
-            ADD Product
+            {product_id != undefined ? "Edit" : "ADD"} Product
           </button>
         </div>
       </form>

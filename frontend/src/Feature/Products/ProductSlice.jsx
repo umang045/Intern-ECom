@@ -8,6 +8,8 @@ import {
   deleteSellerProductService,
   getAllCategory,
   getAllColors,
+  getAllProductColorService,
+  getAllProductCountService,
   getAllProductReviews,
   getAllProducts,
   getAllProductsService,
@@ -15,6 +17,7 @@ import {
   getAllReviewsService,
   getAllSellersProductService,
   getSingleProductService,
+  sellerUpdateProductService,
   toogleSellerProductService,
   uploadImageTocloudinaryService,
 } from "./ProductService";
@@ -203,6 +206,41 @@ export const adminGetAllProducts = createAsyncThunk(
     }
   }
 );
+
+export const getAllProductCount = createAsyncThunk(
+  "product/admin-getAllProducts-count",
+  async (ThunkAPI) => {
+    try {
+      // console.log(id);
+      return await getAllProductCountService();
+    } catch (error) {
+      return ThunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const getAllProductColor = createAsyncThunk(
+  "product/admin-getProducts-color",
+  async (product_id, ThunkAPI) => {
+    try {
+      // console.log(id);
+      return await getAllProductColorService(product_id);
+    } catch (error) {
+      return ThunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const sellerUpdateProduct = createAsyncThunk(
+  "product/seller-updateProduct",
+  async (product_data, ThunkAPI) => {
+    try {
+      console.log(product_data);
+      return await sellerUpdateProductService(product_data);
+    } catch (error) {
+      return ThunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 //declare initial state for auth - Chanable by requirements
 const initialState = {
   products: [],
@@ -233,6 +271,9 @@ export const productsSlice = createSlice({
     generateExtraReducers(uploadImgToCloudinary, "uploadImageToCloud")(builder);
     generateExtraReducers(addSellerProduct, "addSellerProduct")(builder);
     generateExtraReducers(adminGetAllProducts, "adminProductList")(builder);
+    generateExtraReducers(getAllProductCount, "totalProducts")(builder);
+    generateExtraReducers(getAllProductColor, "productColorList")(builder);
+    generateExtraReducers(sellerUpdateProduct, "sellerUpdateProduct")(builder);
     generateExtraReducers(
       deleteImgFromCloudinary,
       "deleteImageFromCloud"

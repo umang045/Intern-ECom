@@ -6,7 +6,12 @@ const config = getConfig();
 
 //get all product of product by filters
 export const getAllProducts = async (data) => {
-  let selectedCategoryId, minPrice, maxPrice, selectedColorId, sortOption;
+  let selectedCategoryId,
+    minPrice,
+    maxPrice,
+    selectedColorId,
+    sortOption,
+    currentPage;
   const params = {};
   if (data.selectedCategoryId) {
     params.selected_category_id = data.selectedCategoryId;
@@ -22,6 +27,9 @@ export const getAllProducts = async (data) => {
   }
   if (data.sortOption) {
     params.sort_option = data.sortOption;
+  }
+  if (data.currentPage) {
+    params.current_page = data.currentPage;
   }
 
   const response = await axios.get(
@@ -144,6 +152,34 @@ export const addSellerProductService = async (productData) => {
 export const adminGetAllProductService = async () => {
   const response = await axios.get(
     `${base_url}/product/admin/getAllProduct`,
+    config
+  );
+  if (response.data) return response.data;
+};
+
+//get product all product count
+export const getAllProductCountService = async () => {
+  const response = await axios.get(
+    `${base_url}/product/getAllProductCount`,
+    config
+  );
+  if (response.data) return response.data;
+};
+//get all products colors
+export const getAllProductColorService = async (product_id) => {
+  const response = await axios.get(
+    `${base_url}/product/getAllProductColors/${product_id}`,
+    config
+  );
+  if (response.data) return response.data;
+};
+//update products
+export const sellerUpdateProductService = async (product_data) => {
+  // console.log(product_data);
+  
+  const response = await axios.put(
+    `${base_url}/product/updateProducts`,
+    product_data,
     config
   );
   if (response.data) return response.data;

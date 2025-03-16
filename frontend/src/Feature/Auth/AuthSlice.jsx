@@ -41,7 +41,22 @@ export const updateUserPassword = createAsyncThunk(
   "auth/update-pass",
   async (data, ThunkAPI) => {
     try {
+      console.log(data);
+
       return await authService.updateUserPassword(data);
+    } catch (error) {
+      return ThunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const updateProfile = createAsyncThunk(
+  "auth/update-profile",
+  async (data, ThunkAPI) => {
+    try {
+      console.log(data);
+
+      return await authService.updateProfileService(data);
     } catch (error) {
       return ThunkAPI.rejectWithValue(error);
     }
@@ -67,6 +82,7 @@ export const authSlice = createSlice({
     generateExtraReducers(registerUser, "authRegister")(builder);
     generateExtraReducers(sendMail, "sendMail")(builder);
     generateExtraReducers(updateUserPassword, "updateUserPassword")(builder);
+    generateExtraReducers(updateProfile, "updateUserProfile")(builder);
   },
 });
 

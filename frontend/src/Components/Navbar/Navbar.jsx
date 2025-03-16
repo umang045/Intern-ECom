@@ -72,11 +72,11 @@ const Navbar = () => {
               Products
             </Link>
 
-            <Link to="/login" className="text-gray-300 hover:text-white">
+            <Link to="/ContactUs" className="text-gray-300 hover:text-white">
               Contact Us
             </Link>
 
-            <Link to="/register" className="text-gray-300 hover:text-white">
+            <Link to="/aboutUs" className="text-gray-300 hover:text-white">
               About Us
             </Link>
           </div>

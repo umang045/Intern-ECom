@@ -19,7 +19,7 @@ const ProductCard = (props) => {
               navigate(`/products/${item?.product_id}`);
             }}
             key={index}
-            class="  rounded-lg border relative border-gray-200 bg-white p-2 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+            class="product-card  rounded-lg border relative border-gray-200 bg-white p-2 shadow-sm dark:border-gray-700 dark:bg-gray-800"
           >
             {item?.tag_active ? (
               <div
@@ -49,26 +49,26 @@ const ProductCard = (props) => {
             </div>
             <div class="pt-3">
               <a
-                href="#"
-                class="text-sm font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
+                className="text-sm font-semibold leading-tight text-gray-900 hover:underline dark:text-white 
+              truncate block w-full"
               >
-                {item?.title.toString().substring(0, 15) + "..."}
+                {item?.title}
               </a>
 
               <div class="mt-2 flex items-center gap-2">
                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400"></p>
               </div>
 
-              <div class="mt-4 flex items-center justify-between gap-4">
+              <div class="mt-1 flex items-center justify-between gap-4">
                 <p class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">
                   ${item?.price}
                 </p>
               </div>
 
               <div
-                class="text-sm pt-3 font-semibold leading-tight text-gray-900 dark:text-white"
+                className="product-description text-sm text-gray-700"
                 dangerouslySetInnerHTML={{
-                  __html: item?.description.toString().substring(0, 40) + "...",
+                  __html: item?.description,
                 }}
               ></div>
 

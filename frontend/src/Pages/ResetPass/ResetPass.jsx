@@ -40,7 +40,7 @@ const ResetPass = () => {
     },
     validationSchema: passResetSchema,
     onSubmit: async (values) => {
-        console.log(values);
+        // console.log(values);
       const res = await dispatch(updateUserPassword(values));
       if (updateUserPassword.fulfilled.match(res)) {
         toast.success("Password Reset Successfull");

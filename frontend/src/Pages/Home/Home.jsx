@@ -85,9 +85,9 @@ const Home = () => {
             title2="E-Cloth Store"
           />
         </div>
-        <div>
+        <div className="shadow-lg">
           <div className="text-xl m-4 font-bold animate__animated animate__bounce ">
-            Trust of People
+            Brands 
           </div>
           <Marque />
         </div>{" "}

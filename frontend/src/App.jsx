@@ -18,15 +18,18 @@ import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import { SingleProduct } from "./Pages/SingleProduct/SingleProduct";
 import MainSellerLayout from "./Components/MainSellerLayout/MainSellerLayout";
 import MainAdminLayout from "./Components/MainAdminLayout/MainAdminLayout";
+import ResetPass from "./Pages/ResetPass/ResetPass";
 
 //lazy loading components
 const Register = lazy(() => import("./Pages/Register/Register"));
 const MyOrder = lazy(() => import("./Pages/MyOrder/MyOrder"));
 const Checkout = lazy(() => import("./Pages/Checkout/Checkout"));
+const AboutUs = lazy(() => import("./Pages/AboutUs/AboutUs"));
+const ContactUs = lazy(() => import("./Pages/ContactUs/ContactUs"));
 const Profile = lazy(() => import("./Pages/Profile/Profile"));
 const Cart = lazy(() => import("./Pages/Cart/Cart"));
 const Products = lazy(() => import("./Pages/Products/Products"));
-const ResetPass = lazy(() => import("./Pages/ResetPass/ResetPass"));
+// const ResetPass = lazy(() => import("./Pages/ResetPass/ResetPass"));
 const Login = lazy(() => import("./Pages/Login/Login"));
 const SellerAddProduct = lazy(() =>
   import("./Pages/Seller/SellerAddProduct/SellerAddProduct")
@@ -90,16 +93,16 @@ const App = () => {
             path="/register"
             element={isLogin() ? <Home /> : <Register />}
           />
+          <Route path="/resetPassword/:token" element={<ResetPass />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/aboutUs" element={<AboutUs />} />
+          <Route path="/ContactUs" element={<ContactUs />} />
           <Route path="/products/:id" element={<SingleProduct />} />
           <Route
             path="/profile"
             element={<ProtectedRoute element={<Profile />} />}
           />
-          <Route
-            path="/resetPassword/:token"
-            element={<ProtectedRoute element={<ResetPass />} />}
-          />
+
           <Route path="/cart" element={<ProtectedRoute element={<Cart />} />} />
           <Route
             path="/checkout"
@@ -121,6 +124,10 @@ const App = () => {
             <Route path="" element={<SellerHomePage />} />{" "}
             <Route path="addProduct" element={<SellerAddProduct />} />{" "}
             <Route path="sellerProductList" element={<SellerProductList />} />{" "}
+            <Route
+              path="sellerProductList/:product_id"
+              element={<SellerAddProduct />}
+            />{" "}
             <Route
               path="sellerProductList/transaction/:product_id"
               element={<SellerProductTransaction />}

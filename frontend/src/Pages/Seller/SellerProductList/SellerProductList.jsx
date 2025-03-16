@@ -131,7 +131,14 @@ const SellerProductList = () => {
       render: (text, record) => (
         <>
           <div className="flex cursor-pointer gap-2">
-            <FaEdit size={20} color="blue" /> |
+            <FaEdit
+              size={20}
+              color="blue"
+              onClick={() => {
+                navigate(`${record?.product_id}`, { state: record });
+              }}
+            />{" "}
+            |
             <MdDelete
               size={20}
               color="red"
