@@ -189,6 +189,7 @@ export const getUsersOrdersPaymentDetails = createAsyncThunk(
   }
 );
 
+//get-seller-allproducts-slice
 export const getAllSellersOrders = createAsyncThunk(
   "users/get-sellers-order",
   async (ThunkAPI) => {
@@ -232,6 +233,7 @@ export const adminGetAllOrderList = createAsyncThunk(
     }
   }
 );
+
 export const adminGetAllTotalSell = createAsyncThunk(
   "users/admin-all-sell",
   async (ThunkAPI) => {
@@ -242,6 +244,7 @@ export const adminGetAllTotalSell = createAsyncThunk(
     }
   }
 );
+
 export const sellerGetAllTotalProducts = createAsyncThunk(
   "users/seller-total-product",
   async (ThunkAPI) => {
@@ -252,6 +255,7 @@ export const sellerGetAllTotalProducts = createAsyncThunk(
     }
   }
 );
+
 export const GetTotalUsers = createAsyncThunk(
   "users/get-total",
   async (ThunkAPI) => {
@@ -262,6 +266,7 @@ export const GetTotalUsers = createAsyncThunk(
     }
   }
 );
+
 export const sellerTotalOrderStatus = createAsyncThunk(
   "users/get-total-orderstatus",
   async (ThunkAPI) => {
@@ -272,6 +277,7 @@ export const sellerTotalOrderStatus = createAsyncThunk(
     }
   }
 );
+
 export const adminTotalOrderStatus = createAsyncThunk(
   "users/get-admin-orderStatus",
   async (ThunkAPI) => {
@@ -282,6 +288,7 @@ export const adminTotalOrderStatus = createAsyncThunk(
     }
   }
 );
+
 export const adminTotalSells = createAsyncThunk(
   "users/get-admin-totalSell",
   async (ThunkAPI) => {
@@ -292,6 +299,7 @@ export const adminTotalSells = createAsyncThunk(
     }
   }
 );
+
 export const adminTotalProducts = createAsyncThunk(
   "users/get-admin-allProducts",
   async (ThunkAPI) => {
@@ -302,6 +310,7 @@ export const adminTotalProducts = createAsyncThunk(
     }
   }
 );
+
 export const userUpdateProdilePic = createAsyncThunk(
   "users/update-profilepic",
   async (data ,ThunkAPI) => {

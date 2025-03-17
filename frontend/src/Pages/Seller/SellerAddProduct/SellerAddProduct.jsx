@@ -26,6 +26,7 @@ import {
 } from "@/Feature/Products/ProductSlice";
 import { MdDelete } from "react-icons/md";
 
+//define validation schema for form
 let addProductSchema = yup.object({
   title: yup.string().required("Title is required"),
   price: yup.string().required("Price is Required!!"),
@@ -45,7 +46,6 @@ const SellerAddProduct = () => {
       dispatch(getAllProductColor(product_id));
     }
   }, [product_id]);
-  // console.log(product_id);
 
   const { quill, quillRef } = useQuill();
   const [description, setDescription] = useState("");
@@ -61,6 +61,7 @@ const SellerAddProduct = () => {
   const [tagActive, setTagActive] = useState(false);
   const [cloudImagePublicId, setCloudImagePublicId] = useState(null);
 
+  //set product data for edit 
   useEffect(() => {
     if (editProductData) {
       setSelectedSizes(editProductData?.size || []);
@@ -69,12 +70,10 @@ const SellerAddProduct = () => {
       setTagActive(editProductData?.tag_active || false);
       setUploadedImgUrl(editProductData?.image || null);
       setCloudImagePublicId(editProductData?.img_public_id || null);
-      // selectedSizes =
     }
   }, [editProductData]);
 
-  // console.log(cloudImagePublicId);
-
+//formik and submit value for update or insert
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -134,6 +133,8 @@ const SellerAddProduct = () => {
     },
   });
 
+
+  //get quill data for description
   useEffect(() => {
     if (quill) {
       quill.on("text-change", (delta, oldDelta, source) => {
@@ -145,6 +146,8 @@ const SellerAddProduct = () => {
     }
   }, [quill, editProductData]);
 
+  //******************Handle Colors Start ********************** */
+
   const addColors = (value) => {
     setColors([...colors, value]);
   };
@@ -152,6 +155,10 @@ const SellerAddProduct = () => {
   const removeColors = (index) => {
     setColors(colors.filter((_, i) => i !== index));
   };
+
+  //******************Handle Colors End********************** */
+
+  //***************************File Drop & Upload To Cloud Start ***************/
 
   const handleFileDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -162,10 +169,17 @@ const SellerAddProduct = () => {
       : dispatch(uploadImgToCloudinary(formData));
   };
 
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop: handleFileDrop,
+  });
+  //***************************File Drop & Upload To Cloud End ***************/
+
   const { uploadImageToCloud, productColorList, isLoading } = useSelector(
     (state) => state?.products,
     shallowEqual
   );
+
+  //fetch color and set to selected color for edit colors
   useEffect(() => {
     if (product_id != undefined && productColorList) {
       setColors((prevColors) => [
@@ -175,16 +189,13 @@ const SellerAddProduct = () => {
     }
   }, [productColorList, product_id]);
 
+  //fetch image url & public id from data base and set here for update
   useEffect(() => {
     if (uploadImageToCloud) {
       setUploadedImgUrl(uploadImageToCloud?.data?.url);
       setCloudImagePublicId(uploadImageToCloud?.data?.public_id);
     }
   }, [uploadImageToCloud, dispatch]);
-
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop: handleFileDrop,
-  });
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg ">

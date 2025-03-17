@@ -1,6 +1,6 @@
 import { getAllSellersOrders } from "@/Feature/User/UserSlice";
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Table } from "antd";
 import { FaEye } from "react-icons/fa";
@@ -11,6 +11,8 @@ const SellerOrderList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  //***************************Fetch Start*********************/
+
   const fetchSellersOrder = async () => {
     const res = await dispatch(getAllSellersOrders());
   };
@@ -19,7 +21,10 @@ const SellerOrderList = () => {
     fetchSellersOrder();
   }, [dispatch]);
 
-  const { sellersOrderList } = useSelector((state) => state.user);
+  const { sellersOrderList } = useSelector((state) => state.user , shallowEqual);
+  //***************************Fetch End*********************/
+
+  //define column for antd table
   const columns = [
     {
       title: "Order ID",

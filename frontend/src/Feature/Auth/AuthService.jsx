@@ -19,7 +19,6 @@ const loginUser = async (data) => {
 
 //register user service
 const registerUser = async (data) => {
-  console.log(data);
   const response = await axios.post(`${base_url}/auth/register`, data);
   if (response.data) return response.data;
 };
@@ -32,7 +31,6 @@ const sendMail = async (data) => {
 
 //update password
 const updateUserPassword = async (data) => {
-  console.log(data);
   const response = await axios.patch(
     `${base_url}/auth/reset/${data?.token}`,
     data,
@@ -41,6 +39,7 @@ const updateUserPassword = async (data) => {
   if (response.data) return response.data;
 };
 
+//update user profile service
 const updateProfileService = async (data) => {
   const response = await axios.put(
     `${base_url}/auth/updateProfile`,
@@ -49,6 +48,8 @@ const updateProfileService = async (data) => {
   );
   if (response.data) return response.data;
 };
+
+//update password service
 const updateUserPasswordFromProfileService = async (data) => {
   const response = await axios.put(
     `${base_url}/auth/updatePass`,

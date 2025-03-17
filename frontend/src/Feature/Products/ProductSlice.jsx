@@ -82,7 +82,6 @@ export const getSingleProductsReviews = createAsyncThunk(
   "product/get-reviews",
   async (id, ThunkAPI) => {
     try {
-      console.log(id);
       return await getAllProductReviews(id);
     } catch (error) {
       return ThunkAPI.rejectWithValue(error);
@@ -218,6 +217,7 @@ export const getAllProductCount = createAsyncThunk(
     }
   }
 );
+
 export const getAllProductColor = createAsyncThunk(
   "product/admin-getProducts-color",
   async (product_id, ThunkAPI) => {
@@ -229,11 +229,11 @@ export const getAllProductColor = createAsyncThunk(
     }
   }
 );
+
 export const sellerUpdateProduct = createAsyncThunk(
   "product/seller-updateProduct",
   async (product_data, ThunkAPI) => {
     try {
-      console.log(product_data);
       return await sellerUpdateProductService(product_data);
     } catch (error) {
       return ThunkAPI.rejectWithValue(error);

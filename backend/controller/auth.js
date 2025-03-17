@@ -131,7 +131,7 @@ const forgotPass = async (req, res, next) => {
 const resetPass = async (req, res, next) => {
   const { passwordResetToken } = req.params;
   const { newPassword } = req.body;
-  console.log(passwordResetToken, newPassword);
+  // console.log(passwordResetToken, newPassword);
 
   let user_id, del_id;
 
@@ -184,7 +184,7 @@ const updateUserProfile = async (req, res) => {
     const { email, name, mobile } = req.body;
     const user_id = req.userId;
 
-    console.log(email, name, mobile, user_id);
+    // console.log(email, name, mobile, user_id);
 
     const [resultSets, fields] = await db.query("CALL updateProfile(?,?,?,?)", [
       email,
@@ -205,7 +205,7 @@ const updateUserProfile = async (req, res) => {
 const updateProfilePic = async (req, res) => {
   try {
     const { profile_pic, img_public_id } = req.body;
-    console.log(profile_pic, img_public_id);
+    // console.log(profile_pic, img_public_id);
 
     const user_id = req.userId;
 

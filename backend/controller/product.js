@@ -366,7 +366,7 @@ const toogleProd = async (req, res) => {
 //search product
 const searchProd = async (req, res) => {
   const { search, page, seller_id } = req.body;
-  console.log(search, page, seller_id);
+  // console.log(search, page, seller_id);
 
   try {
     const [resultSets, feild] = await db.query("call searchProd(?,?,?)", [
@@ -430,7 +430,7 @@ const updateProdStock = async (req, res) => {
 //get total product of seller
 const getSellerTotalProd = async (req, res) => {
   const seller_id = req.userId;
-  console.log(seller_id);
+  // console.log(seller_id);
 
   try {
     const [totalProd] = await db.query(
@@ -520,7 +520,7 @@ const getSingleProdRview = async (req, res) => {
 //delete single reviews
 const toogleSingleReview = async (req, res) => {
   const { review_id } = req.params;
-  console.log(review_id);
+  // console.log(review_id);
 
   try {
     const [result] = await db.query(

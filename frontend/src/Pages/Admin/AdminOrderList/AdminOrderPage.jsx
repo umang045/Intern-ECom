@@ -11,12 +11,17 @@ const AdminOrderPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  //***************fetch Admin Order Start **************************************** */
+
   useEffect(() => {
     dispatch(adminGetAllOrderList());
   }, [dispatch]);
 
   const { adminOrderList, isLoading } = useSelector((state) => state?.user);
 
+  //***************fetch Admin Order End **************************************** */
+
+  //define column for table
   const columns = [
     {
       title: "Order ID",
@@ -78,9 +83,9 @@ const AdminOrderPage = () => {
             <FaEye
               color="blue"
               size={20}
-                onClick={() => {
-                  navigate(`/superadmin/adminOrderList/${record?.order_id}`);
-                }}
+              onClick={() => {
+                navigate(`/superadmin/adminOrderList/${record?.order_id}`);
+              }}
             />
           </div>
         </>

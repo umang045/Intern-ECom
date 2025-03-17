@@ -14,7 +14,6 @@ const SellerProdTran = () => {
   }, [dispatch, product_id]);
 
   const { productTransactionInfo } = useSelector((state) => state?.products);
-  //   console.log(productTransactionInfo);
 
   const columns = [
     {

@@ -10,6 +10,8 @@ const AdminProductList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  //************************Fetch Start **************************** */
+
   useEffect(() => {
     dispatch(adminGetAllProducts());
   }, [dispatch]);
@@ -18,6 +20,9 @@ const AdminProductList = () => {
     (state) => state?.products
   );
 
+  //************************Fetch End **************************** */
+
+  //define column for table
   const columns = [
     {
       title: "Product ID",
@@ -104,7 +109,7 @@ const AdminProductList = () => {
           className="bg-white"
         />
       </div>
-    </> 
+    </>
   );
 };
 

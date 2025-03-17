@@ -16,11 +16,13 @@ const SellerProductList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+//active and inactive product 
   const handleActiveInactive = async (product_id) => {
     await dispatch(toogleSellerProduct(product_id));
     await dispatch(getAllSellersProducts());
   };
 
+  //delete product
   const handleDeleteSellerProd = async (product_id) => {
     const cnfrm = window.confirm(
       "Are you sure you want to delete this product?"
@@ -33,6 +35,7 @@ const SellerProductList = () => {
     }
   };
 
+  //get all seller products
   const getAllSellersProductsFunc = async () => {
     await dispatch(getAllSellersProducts());
   };

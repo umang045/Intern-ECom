@@ -8,12 +8,16 @@ const AdminSellerList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  //**************************Fetch Start ************************************ */
+
   useEffect(() => {
     dispatch(adminGetAllUsers());
   }, [dispatch]);
 
   const { adminUserList } = useSelector((state) => state?.user);
+  //**************************Fetch End ************************************ */
 
+  //define column for ant table
   const columns = [
     {
       title: "Seller ID",

@@ -22,13 +22,15 @@ const AdminHomePage = () => {
   const [adminOrders, setAdminOrders] = useState(0);
   const [adminSell, setAdminSell] = useState(0);
 
+  //***********************Fetch Start********************************** */
+
   useEffect(() => {
     // dispatch(adminGetAllTotalSell());
     dispatch(adminTotalProducts());
     dispatch(GetTotalUsers());
     dispatch(adminTotalOrderStatus());
     dispatch(adminTotalSells());
-     dispatch(adminGetAllOrderList());
+    dispatch(adminGetAllOrderList());
     // dispatch(getAllSellersOrders());
   }, [dispatch]);
 
@@ -41,6 +43,9 @@ const AdminHomePage = () => {
     adminTotalSell,
   } = useSelector((state) => state?.user, shallowEqual);
 
+  //***********************Fetch End********************************** */
+
+  //************************Calculate Total Order & Sell Start **************************** */
   useEffect(() => {
     let totalNum = 0;
     let totalOrder = 0;
@@ -52,8 +57,9 @@ const AdminHomePage = () => {
     setAdminSell(totalNum);
   }, [dispatch, adminTotalSell]);
 
+  //************************Calculate Total Order & Sell End **************************** */
 
-
+  //static bar data
   const barData = [
     { id: "January", value: 6500 },
     { id: "Feb", value: 5900 },

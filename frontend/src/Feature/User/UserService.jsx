@@ -104,6 +104,7 @@ export const getAllSellersOrderService = async () => {
   const response = await axios.get(`${base_url}/user/seller/getOrder`, config);
   if (response.data) return response.data;
 };
+
 //get sellers single order
 export const getSellersSingleOrderService = async (order_id) => {
   const response = await axios.get(
@@ -113,11 +114,13 @@ export const getSellersSingleOrderService = async (order_id) => {
   if (response.data) return response.data;
 };
 
+//get all users for admin
 export const adminGetAllUsersService = async () => {
   const response = await axios.get(`${base_url}/user/find/all`, config);
   if (response.data) return response.data;
 };
 
+//get all orders for admin
 export const adminGetAllOrderService = async () => {
   const response = await axios.get(
     `${base_url}/user/admin/getOrdersForAdmin`,
@@ -126,6 +129,7 @@ export const adminGetAllOrderService = async () => {
   if (response.data) return response.data;
 };
 
+//get total product count for admin
 export const adminGetAllTotalSellService = async () => {
   const response = await axios.get(
     `${base_url}/user/seller/getAllSellCount`,
@@ -133,6 +137,8 @@ export const adminGetAllTotalSellService = async () => {
   );
   if (response.data) return response.data;
 };
+
+//get seller total product count
 export const sellerGetAllTotalProductsService = async () => {
   const response = await axios.get(
     `${base_url}/user/seller/getAllProdCount`,
@@ -140,6 +146,8 @@ export const sellerGetAllTotalProductsService = async () => {
   );
   if (response.data) return response.data;
 };
+
+//get total user
 export const GetTotalUsersService = async () => {
   const response = await axios.get(
     `${base_url}/user/totalUser`,
@@ -147,6 +155,8 @@ export const GetTotalUsersService = async () => {
   );
   if (response.data) return response.data;
 };
+
+//seller total orders
 export const sellerTotalOrderStatusService = async () => {
   const response = await axios.get(
     `${base_url}/user/seller/getOrderStatusCount`,
@@ -154,6 +164,8 @@ export const sellerTotalOrderStatusService = async () => {
   );
   if (response.data) return response.data;
 };
+
+//admin total orders
 export const adminTotalOrderStatusService = async () => {
   const response = await axios.get(
     `${base_url}/user/admin/getStatusCount`,
@@ -161,6 +173,8 @@ export const adminTotalOrderStatusService = async () => {
   );
   if (response.data) return response.data;
 };
+
+//admin total sell service
 export const adminTotalSellService = async () => {
   const response = await axios.get(
     `${base_url}/user/admin/getAllAmountCountForAdmin`,
@@ -168,6 +182,8 @@ export const adminTotalSellService = async () => {
   );
   if (response.data) return response.data;
 };
+
+//admin total products service
 export const adminTotalProductsService = async () => {
   const response = await axios.get(
     `${base_url}/product/admin/getAllProduct`,
@@ -175,6 +191,8 @@ export const adminTotalProductsService = async () => {
   );
   if (response.data) return response.data;
 };
+
+//update profile 
 export const userUpdateProdilePicService = async (data) => {
   const response = await axios.post(
     `${base_url}/auth/updateProfilePic`,

@@ -6,7 +6,6 @@ import "./ProductCard.css";
 
 const ProductCard = (props) => {
   const { data } = props;
-  // console.log(data);
   const navigate = useNavigate();
 
   return (

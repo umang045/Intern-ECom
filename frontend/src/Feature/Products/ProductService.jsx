@@ -44,7 +44,6 @@ export const getAllProducts = async (data) => {
 //getAll product for home
 export const getAllProductsService = async (data) => {
   const response = await axios.get(`${base_url}/product`, config);
-
   if (response.data) return response.data;
 };
 
@@ -165,6 +164,7 @@ export const getAllProductCountService = async () => {
   );
   if (response.data) return response.data;
 };
+
 //get all products colors
 export const getAllProductColorService = async (product_id) => {
   const response = await axios.get(
@@ -173,10 +173,9 @@ export const getAllProductColorService = async (product_id) => {
   );
   if (response.data) return response.data;
 };
+
 //update products
 export const sellerUpdateProductService = async (product_data) => {
-  // console.log(product_data);
-  
   const response = await axios.put(
     `${base_url}/product/updateProducts`,
     product_data,

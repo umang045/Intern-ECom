@@ -3,11 +3,12 @@ import { authService } from "./AuthService";
 import generateExtraReducers from "../GenerateExtraReducer";
 
 // Define a type for the state
+
+//register-slice
 export const registerUser = createAsyncThunk(
   "auth/register",
   async (data, ThunkAPI) => {
     try {
-      console.log(data);
       return await authService.registerUser(data);
     } catch (error) {
       return ThunkAPI.rejectWithValue(error);
@@ -15,6 +16,7 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+//login-slice
 export const loginUser = createAsyncThunk(
   "auth/login",
   async (data, ThunkAPI) => {
@@ -26,6 +28,7 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+//mailsend-slice
 export const sendMail = createAsyncThunk(
   "auth/send-mail",
   async (data, ThunkAPI) => {
@@ -37,12 +40,11 @@ export const sendMail = createAsyncThunk(
   }
 );
 
+//updatepassword-slice
 export const updateUserPassword = createAsyncThunk(
   "auth/update-pass",
   async (data, ThunkAPI) => {
     try {
-      console.log(data);
-
       return await authService.updateUserPassword(data);
     } catch (error) {
       return ThunkAPI.rejectWithValue(error);
@@ -50,6 +52,7 @@ export const updateUserPassword = createAsyncThunk(
   }
 );
 
+//update-profile-slice
 export const updateProfile = createAsyncThunk(
   "auth/update-profile",
   async (data, ThunkAPI) => {
@@ -62,11 +65,11 @@ export const updateProfile = createAsyncThunk(
   }
 );
 
+//update-profile-pass-slice
 export const updateUserPasswordFromProfile = createAsyncThunk(
   "auth/update-profile-pass",
   async (data, ThunkAPI) => {
     try {
-      // console.log(data);
       return await authService.updateUserPasswordFromProfileService(data);
     } catch (error) {
       return ThunkAPI.rejectWithValue(error);

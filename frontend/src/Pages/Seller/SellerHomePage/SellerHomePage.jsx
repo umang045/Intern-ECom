@@ -15,6 +15,8 @@ const SellerHomePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  //***************************Fetch Start ***************/
+
   useEffect(() => {
     dispatch(adminGetAllTotalSell());
     dispatch(sellerGetAllTotalProducts());
@@ -30,7 +32,9 @@ const SellerHomePage = () => {
     sellerOrderCount,
     sellersOrderList,
   } = useSelector((state) => state?.user, shallowEqual);
+  //***************************Fetch End ***************/
 
+  //declare bar chart static data
   const barData = [
     { id: "January", value: 6500 },
     { id: "Feb", value: 5900 },

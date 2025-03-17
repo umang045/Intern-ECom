@@ -8,12 +8,16 @@ const AdminUserList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  //**************************Fetch Start ************************************ */
+
   useEffect(() => {
     dispatch(adminGetAllUsers());
   }, [dispatch]);
 
   const { adminUserList } = useSelector((state) => state?.user);
+  //**************************Fetch End ************************************ */
 
+//define antd columns
   const columns = [
     {
       title: "User ID",
