@@ -83,13 +83,9 @@ const Products = () => {
 
   const { isLoading, productList, colorList, categoryList, totalProducts } =
     useSelector((state) => state.products, shallowEqual);
-  // console.log(totalProducts);
 
   useEffect(() => {
-    // console.log(totalProducts?.[0]?.count);
-
     setTotalPage(Math.ceil(totalProducts?.[0]?.count / 10));
-    // console.log(totalPage);
   }, [totalProducts, dispatch]);
 
   //********************fetch End********************* */

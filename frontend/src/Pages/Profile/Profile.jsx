@@ -83,8 +83,6 @@ const Profile = () => {
     }
   };
 
-  // console.log(profileImgUrl , cloudImagePublicId);
-
   const openAddressDialog = () => {
     setIsAddressModalVisible(true);
   };
@@ -171,7 +169,6 @@ const Profile = () => {
     setCloudImagePublicId(userInfo?.img_public_id);
     setProfileImgUrl(userInfo?.img_url);
   }, [userInfo, dispatch]);
-  // console.log(cloudImagePublicId);
 
   useEffect(() => {
     if (userInfo && usersAddress) {

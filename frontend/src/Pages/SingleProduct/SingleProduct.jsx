@@ -90,7 +90,7 @@ export const SingleProduct = () => {
 
   const { usersCart } = useSelector((state) => state.user, shallowEqual);
   useEffect(() => {
-    console.log(usersCart);
+    // console.log(usersCart);
     const isProductInCart = usersCart?.some((item) => item?.product_id == id);
     // console.log(isProductInCart);
     setIsAlreadyAdded(isProductInCart);

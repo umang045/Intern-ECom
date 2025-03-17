@@ -359,6 +359,7 @@ const getUsersOrdersProd = async (req, res) => {
   }
 };
 
+//get user order payment details
 const getUsersOrderPaymentDetails = async (req, res) => {
   const { order_id } = req.params;
   try {

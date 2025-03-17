@@ -49,7 +49,7 @@ const Home = () => {
   // console.log(isLogin());
 
   useEffect(() => {
-    console.log(isLogin());
+    // console.log(isLogin());
     if (isLogin()) {
       // console.log("fetch user");
       dispatch(getSingleUser());
@@ -69,12 +69,11 @@ const Home = () => {
   const { userInfo } = useSelector((state) => state.user, shallowEqual);
   useEffect(() => {
     if (userInfo) {
-      // console.log(userInfo);
       localStorage.setItem("role", userInfo?.role);
     }
   }, [userInfo]);
 
-  //*************************Fetch End *************** */
+  //*************************Fetch End *************************/
   return (
     <>
       <div>
