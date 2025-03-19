@@ -14,7 +14,6 @@ import {
 } from "@/Feature/Products/ProductSlice";
 import { isLogin } from "@/utils/AxiosConfig";
 import { getSingleUser } from "@/Feature/User/UserSlice";
-// import { isTokenExpired } from "@/utils/AxiosConfig";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -44,14 +43,11 @@ const Home = () => {
   //*************************Fetch Start *************** */
   useEffect(() => {
     isLogin();
-    // isLogin() ? dispatch(getSingleUser()) : null;
   }, [isLogin(), dispatch]);
-  // console.log(isLogin());
+  // console.log(isLogin())  
 
   useEffect(() => {
-    // console.log(isLogin());
     if (isLogin()) {
-      // console.log("fetch user");
       dispatch(getSingleUser());
     }
   }, [isLogin(), dispatch]);
@@ -74,6 +70,7 @@ const Home = () => {
   }, [userInfo]);
 
   //*************************Fetch End *************************/
+
   return (
     <>
       <div>
@@ -86,7 +83,7 @@ const Home = () => {
         </div>
         <div className="shadow-lg">
           <div className="text-xl m-4 font-bold animate__animated animate__bounce ">
-            Brands 
+            Brands
           </div>
           <Marque />
         </div>{" "}
@@ -103,7 +100,6 @@ const Home = () => {
             ))}
           </div>
         </div>
-        {/* <div className="bg-gray-800 p-4 w-1/3 animated1"></div> */}
       </div>
     </>
   );

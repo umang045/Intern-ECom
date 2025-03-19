@@ -133,7 +133,6 @@ const SellerAddProduct = () => {
     },
   });
 
-
   //get quill data for description
   useEffect(() => {
     if (quill) {
@@ -388,7 +387,6 @@ const SellerAddProduct = () => {
                 }}
               />
               <Switch
-                // defaultChecked
                 value={tagActive}
                 onChange={(value) => {
                   setTagActive(value);

@@ -9,6 +9,11 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import Chatbot from "react-chatbot-kit";
+import "react-chatbot-kit/build/main.css";
+import config from "@/Chatbot/config";
+import MessageParser from "@/Chatbot/MessageParser";
+import ActionProvider from "@/Chatbot/ActionProvider";
 
 import Navbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer/Footer";
@@ -19,6 +24,8 @@ import { SingleProduct } from "./Pages/SingleProduct/SingleProduct";
 import MainSellerLayout from "./Components/MainSellerLayout/MainSellerLayout";
 import MainAdminLayout from "./Components/MainAdminLayout/MainAdminLayout";
 import ResetPass from "./Pages/ResetPass/ResetPass";
+import { TbMessageChatbotFilled } from "react-icons/tb";
+import { ImCross } from "react-icons/im";
 
 //lazy loading components
 const Register = lazy(() => import("./Pages/Register/Register"));
@@ -29,11 +36,11 @@ const ContactUs = lazy(() => import("./Pages/ContactUs/ContactUs"));
 const Profile = lazy(() => import("./Pages/Profile/Profile"));
 const Cart = lazy(() => import("./Pages/Cart/Cart"));
 const Products = lazy(() => import("./Pages/Products/Products"));
-// const ResetPass = lazy(() => import("./Pages/ResetPass/ResetPass"));
 const Login = lazy(() => import("./Pages/Login/Login"));
 const SellerAddProduct = lazy(() =>
   import("./Pages/Seller/SellerAddProduct/SellerAddProduct")
 );
+
 const SellerProductList = lazy(() =>
   import("./Pages/Seller/SellerProductList/SellerProductList")
 );
@@ -76,6 +83,7 @@ const AdminOrderList = lazy(() =>
 
 const App = () => {
   const [role, setRole] = useState("admin");
+  const [isBotOpen, setIsBotOpen] = useState(false);
 
   //check login or not
   useEffect(() => {
@@ -165,6 +173,36 @@ const App = () => {
         </Routes>
         <Footer></Footer>
       </BrowserRouter>
+      <div className="fixed flex flex-col cursor-pointer items-center justify-center bottom-6 right-5 z-50 ">
+        Chat Bot
+        {isBotOpen ? (
+          <ImCross
+            size={50}
+            color="red"
+            onClick={() => {
+              setIsBotOpen(!isBotOpen);
+            }}
+          />
+        ) : (
+          <TbMessageChatbotFilled
+            size={50}
+            color="red"
+            onClick={() => {
+              setIsBotOpen(!isBotOpen);
+            }}
+          />
+        )}
+      </div>
+      <div
+        className="fixed bottom-20 right-4 z-50 "
+        style={{ display: isBotOpen ? "block" : "none" }}
+      >
+        <Chatbot
+          config={config}
+          messageParser={MessageParser}
+          actionProvider={ActionProvider}
+        />
+      </div>
     </>
   );
 };

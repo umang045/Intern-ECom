@@ -48,9 +48,6 @@ const Login = () => {
     setIsModalOpen(true);
   };
 
-  // const handleOk = () => {
-  //   setIsModalOpen(false);
-  // };
   const handleCancel = () => {
     setIsModalOpen(false);
   };

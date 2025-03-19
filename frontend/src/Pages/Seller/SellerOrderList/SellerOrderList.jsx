@@ -1,5 +1,5 @@
 import { getAllSellersOrders } from "@/Feature/User/UserSlice";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Table } from "antd";
@@ -11,6 +11,8 @@ const SellerOrderList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [sellerNewOrderList, setSellerNewOrderList] = useState([]);
+
   //***************************Fetch Start*********************/
 
   const fetchSellersOrder = async () => {
@@ -21,7 +23,19 @@ const SellerOrderList = () => {
     fetchSellersOrder();
   }, [dispatch]);
 
-  const { sellersOrderList } = useSelector((state) => state.user , shallowEqual);
+  const { sellersOrderList } = useSelector((state) => state.user, shallowEqual);
+
+  useEffect(() => {
+    setSellerNewOrderList(
+      sellersOrderList?.filter(
+        (order, index, self) =>
+          index == self?.findIndex((o) => o.order_id === order.order_id)
+        // console.log(self , order , index)
+      )
+    );
+  }, [sellersOrderList, dispatch]);
+  // console.log(sellerNewOrderList);
+
   //***************************Fetch End*********************/
 
   //define column for antd table
@@ -101,7 +115,7 @@ const SellerOrderList = () => {
       <h1 className="text-2xl font-bold mb-4"> Order List</h1>
       <Table
         columns={columns}
-        dataSource={sellersOrderList}
+        dataSource={sellerNewOrderList}
         rowKey="order_id"
         pagination={true}
         className="bg-white"

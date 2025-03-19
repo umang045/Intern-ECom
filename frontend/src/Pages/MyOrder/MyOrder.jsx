@@ -26,6 +26,7 @@ const MyOrder = () => {
   //*************************Drawer Start *************** */
   const [isVisible, setIsVisible] = useState(false);
   const [selectedOrderStatus, setSelectedOrderStatus] = useState("");
+  // const [order]
 
   const showModal = (orderId) => {
     setIsVisible(true);

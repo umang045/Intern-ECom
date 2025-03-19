@@ -15,6 +15,7 @@ const AdminUserList = () => {
   }, [dispatch]);
 
   const { adminUserList } = useSelector((state) => state?.user);
+
   //**************************Fetch End ************************************ */
 
 //define antd columns

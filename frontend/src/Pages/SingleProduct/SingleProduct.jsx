@@ -26,7 +26,6 @@ export const SingleProduct = () => {
   const navigate = useNavigate();
 
   const [isAlreadyAdded, setIsAlreadyAdded] = useState(false);
-  // console.log(id);
 
   //********************Login Check start********************* */
   useEffect(() => {
@@ -56,7 +55,7 @@ export const SingleProduct = () => {
 
   const handleSize = (sz) => {
     setSize(size === sz ? null : sz);
-    console.log(size, sz);
+    // console.log(size, sz);
   };
 
   const handleAddToCart = async () => {
@@ -90,9 +89,7 @@ export const SingleProduct = () => {
 
   const { usersCart } = useSelector((state) => state.user, shallowEqual);
   useEffect(() => {
-    // console.log(usersCart);
-    const isProductInCart = usersCart?.some((item) => item?.product_id == id);
-    // console.log(isProductInCart);
+    const isProductInCart = usersCart?.some((item) => item?.product_id == id)
     setIsAlreadyAdded(isProductInCart);
   }, [usersCart, id]);
 

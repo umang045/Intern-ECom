@@ -98,5 +98,4 @@ router.get(
 router.post("/seller/onoffschedule", authMiddleware, onOffEvent);
 router.get("/seller/getSinlgeOrder/:order_id", fetchSingleSellerOrders);
 
-module.exports = router;
-
+module.exports = router
