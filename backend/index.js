@@ -25,6 +25,8 @@ app.use("/api/product", prodRoute);
 app.use(notFound);
 app.use(errorHandler);
 
+app.get("/", (req, res) => res.json({ message: "Backend is live" }));
+
 app.listen(8000, () => {
   console.log("server running Succesfully!!");
 });

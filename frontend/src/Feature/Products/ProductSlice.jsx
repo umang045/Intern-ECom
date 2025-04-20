@@ -142,6 +142,7 @@ export const getSellersProductsTransaction = createAsyncThunk(
   async (product_id, ThunkAPI) => {
     try {
       return await getAllProductTransactionService(product_id);
+      // if(statuscodd == 200)
     } catch (error) {
       return ThunkAPI.rejectWithValue(error);
     }
