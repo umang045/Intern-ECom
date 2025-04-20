@@ -17,9 +17,26 @@ require("dotenv").config(); // Load environment variables
 //   },
 // });
 
-const db = async () => {
-  const connection = await mysql.createConnection(process.env.MYSQL_PUBLIC_URL);
-  return connection;
+// const db = async () => {
+//   const connection = await mysql.createConnection(process.env.MYSQL_PUBLIC_URL);
+//   return connection;
+// };
+
+// module.exports = { db };
+
+let connection;
+
+(async () => {
+  connection = await mysql.createConnection(process.env.MYSQL_PUBLIC_URL);
+})();
+
+const db = {
+  query: async (...args) => {
+    if (!connection) {
+      connection = await mysql.createConnection(process.env.MYSQL_PUBLIC_URL);
+    }
+    return connection.query(...args);
+  },
 };
 
 module.exports = { db };
