@@ -13,7 +13,7 @@ const numCPUs = os.cpus().length;
 const authRoute = require("./routes/authRoute");
 const userRoute = require("./routes/userRoute");
 const prodRoute = require("./routes/prodRoute");
-const { notFound, errorHandler } = require("./middleware/errorHandling");
+const { errorHandler } = require("./middleware/errorHandling");
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -22,7 +22,7 @@ app.use("/api/user", userRoute);
 app.use("/api/product", prodRoute);
 
 //cluster for that
-app.use(notFound);
+// app.use(notFound);
 app.use(errorHandler);
 
 app.get("*", (req, res) => {
