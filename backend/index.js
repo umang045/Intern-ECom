@@ -33,6 +33,7 @@ app.get("*", (req, res) => {
   });
 });
 
-app.listen(8000, () => {
-  console.log("server running Succesfully!!");
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`Server running successfully on port ${PORT}!`);
 });
