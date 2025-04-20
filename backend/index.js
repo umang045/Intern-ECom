@@ -14,7 +14,7 @@ const authRoute = require("./routes/authRoute");
 const userRoute = require("./routes/userRoute");
 const prodRoute = require("./routes/prodRoute");
 const { errorHandler } = require("./middleware/errorHandling");
-app.use(cors());
+app.use(cors({ origin: process.env.ALLOWED_ORIGINS || "*" }));
 app.use(bodyParser.json());
 
 app.use("/api/auth", authRoute);
