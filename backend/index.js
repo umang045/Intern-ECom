@@ -25,7 +25,13 @@ app.use("/api/product", prodRoute);
 app.use(notFound);
 app.use(errorHandler);
 
-app.get("/", (req, res) => res.json({ message: "Backend is live" }));
+app.get("*", (req, res) => {
+  res.json({
+    message: "Backend is live and deployed on Vercel!",
+    status: "success",
+    timestamp: new Date().toISOString(),
+  });
+});
 
 app.listen(8000, () => {
   console.log("server running Succesfully!!");
